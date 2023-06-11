@@ -6,13 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/edtTextEMail"
+        android:layout_width="321dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginEnd="45dp"
+        android:ems="10"
+        android:hint="E-Mail"
+        android:inputType="text"
+        android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/edtTextPassword"
+        android:layout_width="321dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="text"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtTextEMail" />
+
+    <Button
+        android:id="@+id/buttonSignIn"
+        android:layout_width="125dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="21dp"
+        android:onClick="signIn"
+        android:text="Sign In"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/edtTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/edtTextPassword" />
+
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="125dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="50dp"
+        android:onClick="signUp"
+        android:text="Sign UP"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edtTextPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>
