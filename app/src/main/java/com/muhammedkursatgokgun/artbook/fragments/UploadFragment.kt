@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.databinding.FragmentUploadBinding
 
 private var _binding: FragmentUploadBinding?=null
-
 private val binding get() = _binding!!
+
 
 class UploadFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,8 @@ class UploadFragment : Fragment() {
         binding.buttonUpload.setOnClickListener {
             val action = UploadFragmentDirections.actionUploadFragmentToArtFragment()
             Navigation.findNavController(it).navigate(action)
+
+
         }
     }
 }
