@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "544193187238",
+    "project_id": "artbookwithfr",
+    "storage_bucket": "artbookwithfr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544193187238:android:f5e662a9ab246a701f1367",
+        "android_client_info": {
+          "package_name": "com.muhammedkursatgokgun.artbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544193187238-ko2117ae9h6skaamj4652aaqmijgr5ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkUh6azAHtZbLXc7-hg_3k6sCXwgeJX_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544193187238-ko2117ae9h6skaamj4652aaqmijgr5ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

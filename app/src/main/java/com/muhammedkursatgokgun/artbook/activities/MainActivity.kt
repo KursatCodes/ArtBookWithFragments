@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
     fun signIn(view:View){
-
+        val email=2
     }
     fun signUp(view:View){
 
