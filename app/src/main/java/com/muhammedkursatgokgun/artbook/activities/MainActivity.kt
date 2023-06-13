@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,15 +29,34 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun signIn(view:View){
-<<<<<<< HEAD
-        val email=2
-=======
         var email = binding.edtTextEMail.text.toString()
         var password = binding.edtTextPassword.text.toString()
+        if(email.isNotEmpty()&&password.isNotEmpty()){
+            auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
+                val intent= Intent(this,ArtActivity::class.java)
+                startActivity(intent)
+                finish()
+            }.addOnFailureListener {
+                Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+            }
+        }else{
+            Toast.makeText(this,"Enter password and email",Toast.LENGTH_LONG).show()
+        }
 
->>>>>>> 60617c8048b9a373a633000945f7c235708dd2a1
     }
     fun signUp(view:View){
-
+        var email = binding.edtTextEMail.text.toString()
+        var password = binding.edtTextPassword.text.toString()
+        if(email.isNotEmpty()&&password.isNotEmpty()) {
+            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+                val intent = Intent(this, ArtActivity::class.java)
+                startActivity(intent)
+                finish()
+            }.addOnFailureListener {
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }else{
+            Toast.makeText(this,"Enter password and email",Toast.LENGTH_LONG).show()
+        }
     }
 }
