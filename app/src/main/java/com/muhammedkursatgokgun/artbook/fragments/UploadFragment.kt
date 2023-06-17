@@ -52,6 +52,7 @@ class UploadFragment : Fragment() {
 
         registerLauncer()
 
+
         binding.buttonUpload.setOnClickListener {
             val action = UploadFragmentDirections.actionUploadFragmentToArtFragment()
             Navigation.findNavController(it).navigate(action)

@@ -19,11 +19,12 @@ import com.google.firebase.ktx.Firebase
 import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.activities.MainActivity
 import com.muhammedkursatgokgun.artbook.databinding.FragmentArtBinding
+import com.muhammedkursatgokgun.artbook.model.Art
 import kotlin.concurrent.fixedRateTimer
 
 private var _binding: FragmentArtBinding?=null
 private lateinit var auth: FirebaseAuth
-
+private var artArrayList = ArrayList<Art>()
 private val binding get() = _binding!!
 class ArtFragment : Fragment() {
 
@@ -71,6 +72,9 @@ class ArtFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         binding.buttonToUploadFr.setOnClickListener {
             val action = ArtFragmentDirections.actionArtFragmentToUploadFragment()
             Navigation.findNavController(it).navigate(action)

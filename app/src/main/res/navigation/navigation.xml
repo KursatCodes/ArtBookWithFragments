@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_artFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
+        <argument
+            android:name="artname"
+            app:argType="string"
+            android:defaultValue="name" />
     </fragment>
     <fragment
         android:id="@+id/uploadFragment"
@@ -21,6 +25,7 @@
         tools:layout="@layout/fragment_upload" >
         <action
             android:id="@+id/action_uploadFragment_to_artFragment"
-            app:destination="@id/artFragment" />
+            app:destination="@id/artFragment"
+            />
     </fragment>
 </navigation>
