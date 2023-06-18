@@ -13,10 +13,6 @@
         <action
             android:id="@+id/action_artFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
-        <argument
-            android:name="artname"
-            app:argType="string"
-            android:defaultValue="kursat" />
     </fragment>
     <fragment
         android:id="@+id/uploadFragment"
@@ -27,5 +23,9 @@
             android:id="@+id/action_uploadFragment_to_artFragment"
             app:destination="@id/artFragment"
             />
+        <argument
+            android:name="silinecek"
+            app:argType="string"
+            android:defaultValue="sil" />
     </fragment>
 </navigation>

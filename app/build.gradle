@@ -1,11 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id("androidx.navigation.safeargs") // bu olmazsa FragmentDirection gelmiyor
+    //id("androidx.navigation.safeargs") // bu olmazsa FragmentDirection gelmiyor
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
-}
 
+}
+apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     namespace 'com.muhammedkursatgokgun.artbook'
     compileSdk 33

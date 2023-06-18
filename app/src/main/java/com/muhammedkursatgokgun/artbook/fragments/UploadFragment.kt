@@ -98,8 +98,13 @@ class UploadFragment : Fragment() {
             //val action = UploadFragmentDirections.actionUploadFragmentToArtFragment()
             //Navigation.findNavController(it).navigate(action)
         }
+
         binding.imageView.setOnClickListener {
             requestPermission()
+        }
+
+        binding.deleteButton.setOnClickListener {
+
         }
         println("selam --- 5")
     }

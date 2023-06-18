@@ -24,7 +24,6 @@ import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.activities.MainActivity
 import com.muhammedkursatgokgun.artbook.adapter.RecyclerViewAdapter
 import com.muhammedkursatgokgun.artbook.databinding.FragmentArtBinding
-import com.muhammedkursatgokgun.artbook.fragments.UploadFragmentDirections.ActionUploadFragmentToArtFragment
 import com.muhammedkursatgokgun.artbook.model.Art
 import com.muhammedkursatgokgun.artbook.roomdb.Dao
 import com.muhammedkursatgokgun.artbook.roomdb.database
