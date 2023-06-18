@@ -13,12 +13,14 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.transaction
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.activities.MainActivity
 import com.muhammedkursatgokgun.artbook.databinding.FragmentArtBinding
+import com.muhammedkursatgokgun.artbook.fragments.UploadFragmentDirections.ActionUploadFragmentToArtFragment
 import com.muhammedkursatgokgun.artbook.model.Art
 import kotlin.concurrent.fixedRateTimer
 
@@ -39,8 +41,9 @@ class ArtFragment : Fragment() {
         return when (item.itemId) {
             R.id.add_art -> {
                 // Navigate to settings screen.
+                var arguman=2
                 val action = ArtFragmentDirections.actionArtFragmentToUploadFragment()
-                Navigation.findNavController(this@ArtFragment.requireView()).navigate(action)
+                Navigation.findNavController(requireView()).navigate(action)
                 true
             }
             R.id.sign_out -> {
@@ -48,10 +51,12 @@ class ArtFragment : Fragment() {
                 auth.signOut()
                 val intent = Intent(this.context,MainActivity::class.java)
                 startActivity(intent)
-                fragmentManager?.commit {
+                onDestroy()
+                /*fragmentManager?.commit {
                     setReorderingAllowed(true)
                     replace<UploadFragment>(R.id.artFragment)
-                }
+                }*/
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -72,7 +77,6 @@ class ArtFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         binding.buttonToUploadFr.setOnClickListener {

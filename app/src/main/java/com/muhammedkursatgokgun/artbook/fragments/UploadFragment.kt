@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -24,12 +25,14 @@ import com.google.firebase.ktx.Firebase
 import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.activities.ArtActivity
 import com.muhammedkursatgokgun.artbook.databinding.FragmentUploadBinding
+import com.muhammedkursatgokgun.artbook.model.Art
 
 private var _binding: FragmentUploadBinding?=null
 private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 private lateinit var permissionLauncher: ActivityResultLauncher<String>
 private val binding get() = _binding!!
 private var selectedImage :Uri? = null
+private var artNames = ArrayList<Art>()
 class UploadFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,21 +55,53 @@ class UploadFragment : Fragment() {
 
         registerLauncer()
 
-
         binding.buttonUpload.setOnClickListener {
-            val action = UploadFragmentDirections.actionUploadFragmentToArtFragment()
+            var name = binding.editTextTittle.text.toString()
+            var comment = binding.editTextComment.text.toString()
+            var image: Uri?=null
+            selectedImage?.let {
+                image = selectedImage
+            }
+            var newArt = Art(name,comment,image)
+            artNames= ArrayList<Art>()
+            artNames.add(newArt)
+            val action=
+                UploadFragmentDirections.actionUploadFragmentToArtFragment()
             Navigation.findNavController(it).navigate(action)
         }
         binding.imageView.setOnClickListener {
-            if(ContextCompat.checkSelfPermission(it.context,Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+            requestPermission()
+        }
+    }
+    private fun requestPermission(){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(requireActivity(),Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
                 if(ActivityCompat.shouldShowRequestPermissionRationale(this@UploadFragment.requireActivity(),Manifest.permission.READ_EXTERNAL_STORAGE)){
-                    Snackbar.make(it,"Need permission.",Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
+                    Snackbar.make(requireView(),"Need permission.",Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
                         //request permission
                         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                     }.show()
                 }else{
                     //request permission
                     permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+
+            }else{
+                //intent to galerry
+                //start activity for result
+                val intentToGallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                activityResultLauncher.launch(intentToGallery)
+            }
+        }else{
+            if(ContextCompat.checkSelfPermission(requireActivity(),Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this@UploadFragment.requireActivity(),Manifest.permission.READ_MEDIA_IMAGES)){
+                    Snackbar.make(requireView(),"Need permission.",Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
+                        //request permission
+                        permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                    }.show()
+                }else{
+                    //request permission
+                    permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
                 }
 
             }else{
@@ -95,6 +130,7 @@ class UploadFragment : Fragment() {
                 activityResultLauncher.launch(intentToGallery)
             }else{
                 Toast.makeText(this.context,"Need permission dedikya gardaş.",Toast.LENGTH_LONG).show()
+
             }
         }
     }

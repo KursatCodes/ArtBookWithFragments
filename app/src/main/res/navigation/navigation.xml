@@ -16,7 +16,7 @@
         <argument
             android:name="artname"
             app:argType="string"
-            android:defaultValue="name" />
+            android:defaultValue="kursat" />
     </fragment>
     <fragment
         android:id="@+id/uploadFragment"
