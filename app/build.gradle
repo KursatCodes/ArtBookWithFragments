@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id("androidx.navigation.safeargs") // bu olmazsa FragmentDirection gelmiyor
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,6 +40,7 @@ android {
 
 dependencies {
     var nav_version = '2.6.0'
+    var room_version = "2.5.1"
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -58,6 +60,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")// optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-rxjava3:$room_version")// optional - RxJava3 support for Room
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
 
 
 }
