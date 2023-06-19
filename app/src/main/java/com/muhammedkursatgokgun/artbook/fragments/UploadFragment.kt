@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -69,26 +70,37 @@ class UploadFragment : Fragment() {
             requireContext(),
             database::class.java,
             "Art").build()
-        println("selam --- 2")
+
         val myDao = db.dao()
-        println("selam --- 111")
+
         //val arts : List<Art> = myDao.getAll()
-        println("selam --- 222")
+
         registerLauncer()
-        println("selam --- 3")
+
         arguments?.let {
             val gelen = UploadFragmentArgs.fromBundle(it).silinecek
-            binding.textView3.setText(gelen)
+            val idFromArtFragment = UploadFragmentArgs.fromBundle(it).id
+            if (gelen.equals("eski")){
+                myDisposable.add(myDao.getById(idFromArtFragment)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleResponseOldData)
+                )
+                binding.textView3.setText(gelen)
+            }else{
+                binding.textView3.setText("gelen")
+            }
+
         }
         binding.buttonUpload.setOnClickListener {
             var name = binding.editTextTittle.text.toString()
             var comment = binding.editTextComment.text.toString()
-            println("selam --- 4")
+
             if(selectedBitmap!=null){
                 var smallBitmap = makeSmallerBitmap(selectedBitmap!!,300)
                 var outputStream = ByteArrayOutputStream()
                 smallBitmap.compress(Bitmap.CompressFormat.PNG,50,outputStream)
-                println("selam --- 7")
+
                 var byteArray = outputStream.toByteArray()
 
                 var art = Art(name,comment,byteArray)
@@ -110,7 +122,15 @@ class UploadFragment : Fragment() {
         binding.deleteButton.setOnClickListener {
 
         }
-        println("selam --- 5")
+
+    }
+    private fun handleResponseOldData(art: Art){
+        art.image?.let {
+            var bitmap =BitmapFactory.decodeByteArray(it,0,it.size)
+            binding.imageView.setImageBitmap(bitmap)
+        }
+        binding.editTextTittle.setText(art.name)
+        binding.editTextComment.setText(art.comment)
     }
     private fun handleRespose(){
         var action = UploadFragmentDirections.actionUploadFragmentToArtFragment()

@@ -14,7 +14,7 @@ interface Dao {
     fun getAll(): Flowable<List<Art>>
 
     @Query("SELECT * FROM Art WHERE id = :id")
-    fun getById(id: Int): List<Art>
+    fun getById(id: Int): Flowable<Art>
 
     @Query("SELECT * FROM Art WHERE name = :name")
     fun findByName(name : String): Art

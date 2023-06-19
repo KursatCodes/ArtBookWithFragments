@@ -57,8 +57,7 @@ class ArtFragment : Fragment() {
         return when (item.itemId) {
             R.id.add_art -> {
                 // Navigate to settings screen.
-                var arguman=2
-                val action = ArtFragmentDirections.actionArtFragmentToUploadFragment()
+                val action = ArtFragmentDirections.actionArtFragmentToUploadFragment("yeni",id=1)
                 Navigation.findNavController(requireView()).navigate(action)
                 true
             }
@@ -97,7 +96,7 @@ class ArtFragment : Fragment() {
         getFromDatabase()
 
         binding.buttonToUploadFr.setOnClickListener {
-            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment("alooo")
+            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment("alooo",id=1)
             Navigation.findNavController(it).navigate(action)
         }
         auth = Firebase.auth

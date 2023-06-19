@@ -27,7 +27,9 @@ class RecyclerViewAdapter(var artList: List<Art>) : RecyclerView.Adapter<Recycle
         var name =artList.get(position).name
         holder.binding.recylerViewTextView.text= name
         holder.itemView.setOnClickListener{
-            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment()
+            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment(
+                silinecek = "eski", id = artList.get(position).id
+            )
             Navigation.findNavController(holder.itemView).navigate(action)
         }
     }

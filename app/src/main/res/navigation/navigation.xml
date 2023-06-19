@@ -25,7 +25,9 @@
             />
         <argument
             android:name="silinecek"
-            app:argType="string"
-            android:defaultValue="sil" />
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>
