@@ -76,6 +76,10 @@ class UploadFragment : Fragment() {
         println("selam --- 222")
         registerLauncer()
         println("selam --- 3")
+        arguments?.let {
+            val gelen = UploadFragmentArgs.fromBundle(it).silinecek
+            binding.textView3.setText(gelen)
+        }
         binding.buttonUpload.setOnClickListener {
             var name = binding.editTextTittle.text.toString()
             var comment = binding.editTextComment.text.toString()

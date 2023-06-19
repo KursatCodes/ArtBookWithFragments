@@ -97,7 +97,7 @@ class ArtFragment : Fragment() {
         getFromDatabase()
 
         binding.buttonToUploadFr.setOnClickListener {
-            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment()
+            val action = ArtFragmentDirections.actionArtFragmentToUploadFragment("alooo")
             Navigation.findNavController(it).navigate(action)
         }
         auth = Firebase.auth
