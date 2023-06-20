@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -30,6 +31,7 @@ import com.muhammedkursatgokgun.artbook.R
 import com.muhammedkursatgokgun.artbook.activities.ArtActivity
 import com.muhammedkursatgokgun.artbook.databinding.FragmentUploadBinding
 import com.muhammedkursatgokgun.artbook.model.Art
+import com.muhammedkursatgokgun.artbook.roomdb.Dao
 import com.muhammedkursatgokgun.artbook.roomdb.database
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -41,10 +43,15 @@ import java.io.OutputStream
 private var _binding: FragmentUploadBinding?=null
 private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 private lateinit var permissionLauncher: ActivityResultLauncher<String>
+
+
 private val binding get() = _binding!!
 private var selectedImage :Uri? = null
 private var selectedBitmap : Bitmap?=null
-private var artNames = ArrayList<Art>()
+private lateinit var arts : List<Art>
+private lateinit var oldArt:Art
+private lateinit var myDao: Dao
+
 private val myDisposable = CompositeDisposable()
 class UploadFragment : Fragment() {
 
@@ -69,18 +76,19 @@ class UploadFragment : Fragment() {
         val db = Room.databaseBuilder(
             requireContext(),
             database::class.java,
-            "Art").build()
+            "Art").allowMainThreadQueries().build() //.allowMainThreadQueries()
 
-        val myDao = db.dao()
-
-        //val arts : List<Art> = myDao.getAll()
+        myDao = db.dao()
 
         registerLauncer()
 
         arguments?.let {
             val gelen = UploadFragmentArgs.fromBundle(it).silinecek
-            val idFromArtFragment = UploadFragmentArgs.fromBundle(it).id
+
             if (gelen.equals("eski")){
+                binding.buttonUpload.visibility = View.GONE
+                binding.deleteButton.visibility = View.VISIBLE
+                val idFromArtFragment = UploadFragmentArgs.fromBundle(it).id
                 myDisposable.add(myDao.getById(idFromArtFragment)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +96,8 @@ class UploadFragment : Fragment() {
                 )
                 binding.textView3.setText(gelen)
             }else{
+                binding.buttonUpload.visibility = View.VISIBLE
+                binding.deleteButton.visibility = View.GONE
                 binding.textView3.setText("gelen")
             }
 
@@ -118,13 +128,32 @@ class UploadFragment : Fragment() {
         binding.imageView.setOnClickListener {
             requestPermission()
         }
+        var gelenId=23
+        arguments?.let {
+            gelenId = UploadFragmentArgs.fromBundle(it).id
+        }
+        myDisposable.add(myDao.getById(gelenId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::handleResponseOldData)
+        )
+        binding.deleteButton.setOnClickListener {delete(view)}
 
-        binding.deleteButton.setOnClickListener {
-
+    }
+    private fun delete(view: View){
+        println("selam 1")
+        oldArt?.let {
+            println("selam 2")
+            myDisposable.add(myDao.delete(it)
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleRespose))
+            println("selam 3")
         }
 
     }
     private fun handleResponseOldData(art: Art){
+        oldArt=art
         art.image?.let {
             var bitmap =BitmapFactory.decodeByteArray(it,0,it.size)
             binding.imageView.setImageBitmap(bitmap)

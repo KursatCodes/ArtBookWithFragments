@@ -24,13 +24,12 @@ class RecyclerViewAdapter(var artList: List<Art>) : RecyclerView.Adapter<Recycle
     }
 
     override fun onBindViewHolder(holder: ArtHolder, position: Int) {//bağlama işlemi yapıyoruz
-        var name =artList.get(position).name
-        holder.binding.recylerViewTextView.text= name
+        holder.binding.recylerViewTextView.text= artList.get(position).name
         holder.itemView.setOnClickListener{
             val action = ArtFragmentDirections.actionArtFragmentToUploadFragment(
-                silinecek = "eski", id = artList.get(position).id
+                silinecek = "eski", id = artList[position].id
             )
-            Navigation.findNavController(holder.itemView).navigate(action)
+            Navigation.findNavController(it).navigate(action)
         }
     }
 }

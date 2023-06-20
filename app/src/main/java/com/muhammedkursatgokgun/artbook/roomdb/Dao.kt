@@ -17,11 +17,11 @@ interface Dao {
     fun getById(id: Int): Flowable<Art>
 
     @Query("SELECT * FROM Art WHERE name = :name")
-    fun findByName(name : String): Art
+    fun findByName(name : String): Flowable<Art>
 
     @Insert
     fun insert(art: Art) :Completable
 
     @Delete
-    fun delete(art: Art)
+    fun delete(art: Art): Completable
 }
